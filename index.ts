@@ -67,7 +67,8 @@ import ProjectModel from './models/project';
 
 const main = async () => {
   await connectDB();
-
+  const usr = await UserModel.find();
+  console.log(usr);
   // order = await Order.find({ customer_id: '6186629a2dde6bb7f645aeaf' });
   // console.log(order);
 };

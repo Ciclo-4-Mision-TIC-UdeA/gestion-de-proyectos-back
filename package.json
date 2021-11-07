@@ -4,10 +4,13 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node index.ts"
+    "start": "ts-node server.ts"
   },
   "dependencies": {
     "@types/mongoose": "^5.11.97",
+    "apollo-server-express": "^3.5.0",
+    "express": "^4.17.1",
+    "graphql": "^16.0.1",
     "mongoose": "^6.0.12",
     "mongoose-type-email": "^1.1.2",
     "mongoose-unique-validator": "^3.0.0",
