@@ -4,69 +4,86 @@ import { UserModel } from '../models/user';
 const typeDefs = gql`
   scalar Date
 
-  enum Role {
-    Estudiante
-    Lider
-    Administrador
+  enum Enum_Rol {
+    estudiante
+    lider
+    administrador
   }
 
-  enum ProjectStatus {
-    Activo
-    Inactivo
+  enum Enum_EstadoUsuario {
+    pendiente
+    autorizado
+    no_autorizado
   }
 
-  enum ProjectPhase {
-    Iniciado
-    En
-    Desarrollo
-    Terminado
+  enum Enum_EstadoProyecto {
+    activo
+    inactivo
   }
 
-  type User {
+  enum Enum_FaseProyecto {
+    iniciado
+    desarrollo
+    terminado
+    nula
+  }
+
+  enum Enum_TipoObjetivo {
+    general
+    especifico
+  }
+
+  enum Enum_EstadoInscripcion {
+    aceptada
+    rechazada
+  }
+
+  type Usuario {
     _id: ID!
-    name: String!
-    lastName: String!
-    email: String!
-    document: String!
-    role: Role!
-    status: String!
+    nombre: String!
+    apellido: String!
+    correo: String!
+    identificacion: String!
+    rol: Enum_Rol!
+    estado: Enum_EstadoUsuario!
   }
 
-  type Project {
+  type Proyecto {
     _id: ID
-    name: String!
-    budget: Float!
-    startDate: Date!
-    finishDate: Date
-    projectStatus: ProjectStatus!
-    projectPhase: ProjectPhase!
-    leader: User!
+    nombre: String!
+    presupuesto: Float!
+    fechaInicio: Date!
+    fechaFin: Date
+    fase: Enum_FaseProyecto!
+    estado: Enum_EstadoProyecto!
+    lider: Usuario!
   }
 
   type Query {
-    Users: [User]
-    User(_id: ID!): User
-    Projects: [Project]
+    Usuarios: [Usuario]
+    Usuario(_id: ID!): Usuario
+    Proyectos: [Proyecto]
+    Proyecto(_id: ID!): Proyecto
   }
 
   type Mutation {
-    createUser(
-      name: String!
-      lastName: String!
-      email: String!
-      document: String!
-      role: Role!
-      status: String!
-    ): User
-    updateUser(
-      name: String!
-      lastName: String!
-      email: String!
-      document: String!
-      role: String!
-      status: String!
-    ): User
-    deleteUser(id: ID!): User
+    crearUsuario(
+      nombre: String!
+      apellido: String!
+      correo: String!
+      identificacion: String!
+      rol: Enum_Rol!
+      estado: Enum_EstadoUsuario!
+    ): Usuario
+    actualizarUsuario(
+      nombre: String!
+      apellido: String!
+      correo: String!
+      identificacion: String!
+      rol: Enum_Rol!
+      estado: Enum_EstadoUsuario!
+    ): Usuario
+    eliminarUsuario(id: ID!): Usuario
   }
 `;
 

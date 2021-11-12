@@ -3,28 +3,29 @@ import { UserModel } from '../models/user';
 
 const resolvers = {
   Query: {
-    Users: async (parent, args) => {
+    Usuarios: async (parent, args) => {
       const users = await UserModel.find();
       return users;
     },
-    User: async (parent, args) => {
+    Usuario: async (parent, args) => {
       const user = await UserModel.findById(args._id);
       return user;
     },
-    Projects: async (parent, args) => {
-      const projects = await ProjectModel.find().populate('leader');
+    Proyectos: async (parent, args) => {
+      const projects = await ProjectModel.find().populate('lider');
       return projects;
     },
   },
 
   Mutation: {
-    createUser: async (parent, args) => {
+    crearUsuario: async (parent, args) => {
       const user = await UserModel.create({
-        name: args.name,
-        lastName: args.lastName,
-        document: args.document,
-        email: args.email,
-        role: args.role,
+        nombre: args.nombre,
+        apellido: args.apellido,
+        identificacion: args.identificacion,
+        correo: args.correo,
+        rol: args.rol,
+        estado: args.estado,
       });
       return user;
     },
