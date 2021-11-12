@@ -1,6 +1,8 @@
 import ProjectModel from '../models/project';
 import UserModel from '../models/user';
 
+//nm
+
 const resolvers = {
   Query: {
     Users: async (parent, args) => {
