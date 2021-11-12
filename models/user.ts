@@ -1,62 +1,59 @@
 import { Schema, model } from 'mongoose';
-import { Enum_UserRole, Enum_UserStatus } from './enums';
+import { Enum_Rol, Enum_EstadoUsuario } from './enums';
 
-// const Customer = require('./customer');
-
-export interface User {
-  name: string;
-  lastName: string;
-  email: string;
-  document: string;
-  role: Enum_UserRole;
-  status: Enum_UserStatus;
+interface User {
+  correo: string;
+  identificacion: string;
+  nombre: string;
+  apellido: string;
+  rol: Enum_Rol;
+  estado: Enum_EstadoUsuario;
 }
 
-const UserSchema = new Schema<User>({
-  name: {
-    type: String,
-    required: true,
-  },
-  lastName: {
-    type: String,
-    required: true,
-  },
-  email: {
+const userSchema = new Schema<User>({
+  correo: {
     type: String,
     required: true,
     unique: true,
     validate: {
-      validator: async (email) => {
-        if (!(email.includes('@') && email.includes('.'))) {
-          return false;
-        }
+      validator: (email) => {
+        return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email);
       },
-      message: 'Please enter a valid email',
+      // (email) => {
+      //   if (email.includes('@') && email.includes('.')) {
+      //     return true;
+      //   } else {
+      //     return false;
+      //   }
+      // },
+      message: 'El formato del correo electrónico está malo.',
     },
-    // validate: {
-    //   validator: function (v) {
-    //     return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v);
-    //   },
-    //   message: 'Please enter a valid email',
-    // },
   },
-  document: {
+  identificacion: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  nombre: {
     type: String,
     required: true,
   },
-  role: {
+  apellido: {
     type: String,
     required: true,
-    enum: Enum_UserRole,
   },
-  status: {
+  rol: {
     type: String,
     required: true,
-    enum: Enum_UserStatus,
-    default: Enum_UserStatus.pendiente,
+    enum: Enum_Rol,
+  },
+  estado: {
+    type: String,
+    enum: Enum_EstadoUsuario,
+    default: Enum_EstadoUsuario.pendiente,
   },
 });
 
-const UserModel = model('User', UserSchema);
+const UserModel = model('User', userSchema);
 
-export default UserModel;
+export { UserModel };

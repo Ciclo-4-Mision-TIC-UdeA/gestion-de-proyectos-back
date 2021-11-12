@@ -1,50 +1,66 @@
 import { Schema, model } from 'mongoose';
-import { Enum_ProjectPhase, Enum_ProjectStatus } from './enums';
-import UserModel from './user';
+import { Enum_EstadoProyecto, Enum_FaseProyecto, Enum_TipoObjetivo } from './enums';
+import { ObjectiveModel } from './objective';
+import { UserModel } from './user';
 
-interface Project {
-  name: string;
-  budget: number;
-  startDate: Date;
-  finishDate: Date;
-  projectStatus: Enum_ProjectStatus;
-  projectPhase: Enum_ProjectPhase;
-  leader: Schema.Types.ObjectId;
+interface Proyecto {
+  nombre: string;
+  presupuesto: number;
+  fechaInicio: Date;
+  fechaFin: Date;
+  estado: Enum_EstadoProyecto;
+  fase: Enum_FaseProyecto;
+  lider: Schema.Types.ObjectId;
+  objetivos: [{ descripcion: String; tipo: Enum_TipoObjetivo }];
 }
 
-const ProjectSchema = new Schema<Project>({
-  name: {
+const projectSchema = new Schema<Proyecto>({
+  nombre: {
     type: String,
     required: true,
   },
-  budget: {
+  presupuesto: {
     type: Number,
     required: true,
   },
-  startDate: {
+  fechaInicio: {
     type: Date,
     required: true,
   },
-  finishDate: {
+  fechaFin: {
     type: Date,
     required: true,
   },
-  projectStatus: {
+  estado: {
     type: String,
-    enum: Enum_ProjectStatus,
-    default: Enum_ProjectStatus.inactivo,
+    enum: Enum_EstadoProyecto,
+    default: Enum_EstadoProyecto.inactivo,
   },
-  projectPhase: {
+  fase: {
     type: String,
-    enum: Enum_ProjectPhase,
-    default: Enum_ProjectPhase.null,
+    enum: Enum_FaseProyecto,
+    default: Enum_FaseProyecto.nula,
   },
-  leader: {
+  lider: {
     type: Schema.Types.ObjectId,
+    required: true,
     ref: UserModel,
   },
+  objetivos: [
+    {
+      descripcion: {
+        type: String,
+        required: true,
+      },
+      tipo: {
+        type: String,
+        enum: Enum_TipoObjetivo,
+        required: true,
+      },
+    },
+  ],
 });
 
-const ProjectModel = model('Project', ProjectSchema);
+const ProjectModel = model('Proyecto', projectSchema);
 
-export default ProjectModel;
+export { ProjectModel };

@@ -1,9 +1,13 @@
 import { connect } from 'mongoose';
 
-const connectDB = async () => {
-  return await connect(
-    'mongodb+srv://admin:admin@testmongoose.k0loc.mongodb.net/mongoose-test?retryWrites=true&w=majority'
-  );
+const conectarBD = async () => {
+  return await connect(process.env.DATABASE_URL)
+    .then(() => {
+      console.log('Conexion exitosa');
+    })
+    .catch((e) => {
+      console.error('Error conectando a la bd', e);
+    });
 };
 
-export default connectDB;
+export default conectarBD;

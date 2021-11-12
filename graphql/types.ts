@@ -1,7 +1,5 @@
 import { gql } from 'apollo-server-express';
-import UserModel from '../models/user';
-
-//nm
+import { UserModel } from '../models/user';
 
 const typeDefs = gql`
   scalar Date

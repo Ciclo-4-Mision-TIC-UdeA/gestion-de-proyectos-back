@@ -1,7 +1,5 @@
-import ProjectModel from '../models/project';
-import UserModel from '../models/user';
-
-//nm
+import { ProjectModel } from '../models/project';
+import { UserModel } from '../models/user';
 
 const resolvers = {
   Query: {

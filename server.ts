@@ -6,6 +6,10 @@ import connectDB from './db/db';
 import types from './graphql/types';
 import resolvers from './graphql/resolvers';
 
+import dotenv from 'dotenv';
+
+dotenv.config();
+
 const server = new ApolloServer({
   typeDefs: types,
   resolvers: resolvers,
@@ -21,5 +25,5 @@ app.listen({ port: 4000 }, async () => {
   await server.start();
   server.applyMiddleware({ app });
 
-  console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`);
+  console.log(`🚀 Server ready at http://localhost:${process.env.PORT}${server.graphqlPath}`);
 });
