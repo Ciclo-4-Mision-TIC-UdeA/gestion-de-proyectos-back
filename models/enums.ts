@@ -1,30 +1,30 @@
 enum Enum_Rol {
-  estudiante = 'Estudiante',
-  lider = 'Líder',
-  administrador = 'Administrador',
+  ESTUDIANTE = 'ESTUDIANTE',
+  LIDER = 'LIDER',
+  ADMINISTRADOR = 'ADMINISTRADOR',
 }
 
 enum Enum_EstadoUsuario {
-  pendiente = 'Pendiente',
-  autorizado = 'Autorizado',
-  no_autorizado = 'No Autorizado',
+  PENDIENTE = 'PENDIENTE',
+  AUTORIZADO = 'AUTORIZADO',
+  NO_AUTORIZADO = 'NO_AUTORIZADO',
 }
 
 enum Enum_EstadoProyecto {
-  activo = 'Activo',
-  inactivo = 'Inactivo',
+  ACTIVO = 'ACTIVO',
+  INACTIVO = 'INACTIVO',
 }
 
 enum Enum_FaseProyecto {
-  iniciado = 'Iniciado',
-  desarrollo = 'En Desarrollo',
-  terminado = 'Terminado',
-  nula = '',
+  INICIADO = 'INICIADO',
+  DESARROLLO = 'DESARROLLO',
+  TERMINADO = 'TERMINADO',
+  NULO = '',
 }
 
 enum Enum_TipoObjetivo {
-  general = 'General',
-  especifico = 'Especifico',
+  GENERAL = 'GENERAL',
+  ESPECIFICO = 'ESPECIFICO',
 }
 
 enum Enum_EstadoInscripcion {
