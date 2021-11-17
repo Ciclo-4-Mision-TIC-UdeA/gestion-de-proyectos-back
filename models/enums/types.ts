@@ -29,6 +29,11 @@ const enumTypes = gql`
     GENERAL
     ESPECIFICO
   }
+
+  enum Enum_EstadoInscripcion {
+    ACEPTADA
+    RECHAZADA
+  }
 `;
 
 export { enumTypes };
