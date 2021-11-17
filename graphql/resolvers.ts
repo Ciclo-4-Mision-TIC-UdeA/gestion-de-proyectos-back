@@ -62,7 +62,7 @@ const resolvers = {
         fechaFin: args.fechaFin,
         presupuesto: args.presupuesto,
         lider: args.lider,
-        objetivos: [{ descripcion: 'Este es el objetivo general', tipo: 'GENERAL' }],
+        objetivos: args.objetivos,
       });
       return proyectoCreado;
     },
