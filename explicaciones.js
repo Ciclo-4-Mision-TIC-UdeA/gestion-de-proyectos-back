@@ -1,4 +1,4 @@
-import conectarBD from './db/db';
+import conectarBD from './db/db.js';
 import { UserModel } from './models/usuario/usuario';
 import { Enum_EstadoUsuario, Enum_Rol, Enum_TipoObjetivo } from './models/enums/enums';
 import { ProjectModel } from './models/proyecto/proyecto';
