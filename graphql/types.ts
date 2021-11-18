@@ -5,37 +5,37 @@ const typeDefs = gql`
   scalar Date
 
   enum Enum_Rol {
-    estudiante
-    lider
-    administrador
+    ESTUDIANTE
+    LIDER 
+    ADMINISTRADOR
   }
 
   enum Enum_EstadoUsuario {
-    pendiente
-    autorizado
-    no_autorizado
+    PENDIENTE
+    AUTORIZADO
+    NO_AUTORIZADO
   }
 
   enum Enum_EstadoProyecto {
-    activo
-    inactivo
+    ACTIVO
+    INACTIVO
   }
 
   enum Enum_FaseProyecto {
-    iniciado
-    desarrollo
-    terminado
-    nula
+    INICIADO
+    DESARROLLO
+    TERMINADO
+    NULA
   }
 
   enum Enum_TipoObjetivo {
-    general
-    especifico
+    GENERAL
+    ESPECIFICO
   }
 
   enum Enum_EstadoInscripcion {
-    aceptada
-    rechazada
+    ACEPTADA
+    RECHAZADA
   }
 
   type Usuario {
@@ -45,7 +45,13 @@ const typeDefs = gql`
     correo: String!
     identificacion: String!
     rol: Enum_Rol!
-    estado: Enum_EstadoUsuario!
+    estado: Enum_EstadoUsuario
+  }
+
+  type Objetivo{
+    _id: ID!
+    descripcion: String!
+    tipo:Enum_TipoObjetivo!
   }
 
   type Proyecto {
@@ -53,15 +59,16 @@ const typeDefs = gql`
     nombre: String!
     presupuesto: Float!
     fechaInicio: Date!
-    fechaFin: Date
+    fechaFin: Date!
     fase: Enum_FaseProyecto!
     estado: Enum_EstadoProyecto!
     lider: Usuario!
+    objetivos: [Objetivo]
   }
 
   type Query {
     Usuarios: [Usuario]
-    Usuario(_id: ID!): Usuario
+    Usuario(_id: String): Usuario
     Proyectos: [Proyecto]
     Proyecto(_id: ID!): Proyecto
   }
@@ -73,18 +80,32 @@ const typeDefs = gql`
       correo: String!
       identificacion: String!
       rol: Enum_Rol!
-      estado: Enum_EstadoUsuario!
+      estado: Enum_EstadoUsuario
     ): Usuario
-    actualizarUsuario(
+    editarUsuario(
+      _id: String!
       nombre: String!
       apellido: String!
       correo: String!
       identificacion: String!
       rol: Enum_Rol!
-      estado: Enum_EstadoUsuario!
+      estado: Enum_EstadoUsuario
     ): Usuario
-    eliminarUsuario(id: ID!): Usuario
+
+    eliminarUsuario(_id: String, correo: String): Usuario
+
+    crearProyecto(
+      nombre: String!
+      presupuesto: Float!
+      fechaInicio: Date!
+      fechaFin: Date!
+      fase: Enum_FaseProyecto!
+      estado: Enum_EstadoProyecto!
+      lider: String!
+      objetivos: String
+    ): Proyecto
   }
+
 `;
 
 export default typeDefs;

@@ -13,7 +13,7 @@ dotenv.config();
 const server = new ApolloServer({
   typeDefs: types,
   resolvers: resolvers,
-});
+}); 
 const app = express();
 
 app.use(express.json());
