@@ -36,6 +36,6 @@ const avanceSchema = new mongoose.Schema({
   },
 });
 
-const ModeloAvance = mongoose.model('Avance', avanceSchema);
+const ModeloAvance = model('Avance', avanceSchema);
 
 export { ModeloAvance };

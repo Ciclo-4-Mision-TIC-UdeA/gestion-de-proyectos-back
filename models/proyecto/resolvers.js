@@ -3,7 +3,7 @@ import { ProjectModel } from './proyecto.js';
 const resolversProyecto = {
   Query: {
     Proyectos: async (parent, args) => {
-      const proyectos = await ProjectModel.find().populate('lider');
+      const proyectos = await ProjectModel.find().populate('lider').populate('avances');
       return proyectos;
     },
   },
