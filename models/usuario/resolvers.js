@@ -1,9 +1,9 @@
 import { UserModel } from './usuario.js';
+import bcrypt from 'bcrypt';
 
 const resolversUsuario = {
   Query: {
     Usuarios: async (parent, args) => {
-      console.log('parent usuario', parent);
       const usuarios = await UserModel.find();
       return usuarios;
     },
@@ -14,11 +14,15 @@ const resolversUsuario = {
   },
   Mutation: {
     crearUsuario: async (parent, args) => {
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(args.password, salt);
+
       const usuarioCreado = await UserModel.create({
         nombre: args.nombre,
         apellido: args.apellido,
         identificacion: args.identificacion,
         correo: args.correo,
+        password: hashedPassword,
         rol: args.rol,
       });
 
