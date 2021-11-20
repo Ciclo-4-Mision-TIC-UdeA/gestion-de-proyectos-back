@@ -6,16 +6,14 @@ import conectarBD from './db/db.js';
 import { tipos } from './graphql/types.js';
 import { resolvers } from './graphql/resolvers.js';
 import jwt from 'jsonwebtoken';
+import { validateToken } from './utils/tokenUtils.js';
 
 dotenv.config();
 
 const getUser = (token) => {
-  console.log('tkn', token);
   if (token) {
-    const dt = jwt.verify(token.split('Bearer ')[1], 'secreto', (err, data) => {
-      //FALTA CAPTURA DE ERROR DE JWT Y DE SPLIT
-      return data;
-    });
+    //FALTA CAPTURA DE ERROR DE JWT Y DE SPLIT
+    const dt = validateToken(token.split(' ')[1]);
     return { user: dt, authorized: true };
   } else return null;
 };
@@ -25,10 +23,9 @@ const server = new ApolloServer({
   resolvers: resolvers,
   context: ({ req }) => {
     const token = req.headers.authorization;
+    const auth = getUser(token);
 
-    const context = getUser(token);
-
-    return { context };
+    return { auth };
   },
 });
 
@@ -43,6 +40,4 @@ app.listen({ port: process.env.PORT || 4000 }, async () => {
   await server.start();
 
   server.applyMiddleware({ app });
-
-  console.log('servidor listo');
 });
