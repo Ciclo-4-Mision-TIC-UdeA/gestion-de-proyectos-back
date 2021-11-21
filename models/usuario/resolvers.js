@@ -1,8 +1,9 @@
-import { UserModel } from './usuario';
+import { UserModel } from './usuario.js';
 
 const resolversUsuario = {
   Query: {
     Usuarios: async (parent, args) => {
+      console.log('parent usuario', parent);
       const usuarios = await UserModel.find();
       return usuarios;
     },
@@ -28,14 +29,17 @@ const resolversUsuario = {
       return usuarioCreado;
     },
     editarUsuario: async (parent, args) => {
-      const usuarioEditado = await UserModel.findByIdAndUpdate(args._id, {
-        nombre: args.nombre,
-        apellido: args.apellido,
-        identificacion: args.identificacion,
-        correo: args.correo,
-        rol: args.rol,
-        estado: args.estado,
-      });
+      const usuarioEditado = await UserModel.findByIdAndUpdate(
+        args._id,
+        {
+          nombre: args.nombre,
+          apellido: args.apellido,
+          identificacion: args.identificacion,
+          correo: args.correo,
+          estado: args.estado,
+        },
+        { new: true }
+      );
 
       return usuarioEditado;
     },
