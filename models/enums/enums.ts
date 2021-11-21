@@ -19,17 +19,17 @@ enum Enum_FaseProyecto {
   INICIADO = 'INICIADO',
   DESARROLLO = 'DESARROLLO',
   TERMINADO = 'TERMINADO',
-  NULA = 'NULA',
+  NULO = '',
 }
 
 enum Enum_TipoObjetivo {
-  general = 'general',
-  especifico = 'especifico',
+  GENERAL = 'GENERAL',
+  ESPECIFICO = 'ESPECIFICO',
 }
 
 enum Enum_EstadoInscripcion {
-  aceptada = 'aceptada',
-  rechazada = 'rechazada',
+  ACEPTADA = 'ACEPTADA',
+  RECHAZADA = 'RECHAZADA',
 }
 
 export {
