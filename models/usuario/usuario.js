@@ -30,6 +30,10 @@ const userSchema = new Schema({
       message: 'El formato del correo electrónico está malo.',
     },
   },
+  password: {
+    type: String,
+    required: true,
+  },
   identificacion: {
     type: String,
     required: true,
