@@ -59,7 +59,7 @@ const userSchema = new Schema({
   },
 });
 
-userSchema.virtual('avances', {
+userSchema.virtual('avancesCreados', {
   ref: 'Avance',
   localField: '_id',
   foreignField: 'creadoPor',

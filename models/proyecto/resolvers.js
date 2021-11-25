@@ -3,20 +3,12 @@ import { ProjectModel } from './proyecto.js';
 const resolversProyecto = {
   Query: {
     Proyectos: async (parent, args, context) => {
-      if (context.userData.rol === 'ADMINISTRADOR') {
-        const proyectos = await ProjectModel.find()
-          .populate({
-            path: 'avances',
-            populate: {
-              path: 'creadoPor',
-            },
-          })
-          .populate('lider');
-        return proyectos;
-      } else {
-        const proyectos = await ProjectModel.find();
-        return proyectos;
-      }
+      const proyectos = await ProjectModel.find().populate([
+        { path: 'lider' },
+        { path: 'avances' },
+        { path: 'inscripciones', populate: { path: 'estudiante' } },
+      ]);
+      return proyectos;
     },
   },
   Mutation: {
