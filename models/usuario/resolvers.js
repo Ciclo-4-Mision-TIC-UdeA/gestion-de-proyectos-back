@@ -4,39 +4,22 @@ import bcrypt from 'bcrypt';
 const resolversUsuario = {
   Query: {
     Usuarios: async (parent, args, context) => {
-      const usuarios = await UserModel.find()
-        .populate({
+      const usuarios = await UserModel.find().populate([
+        {
           path: 'inscripciones',
           populate: {
             path: 'proyecto',
             populate: [{ path: 'lider' }, { path: 'avances' }],
           },
-        })
-        .populate({
-          path: 'avancesCreados',
-          populate: {
-            path: 'proyecto',
-            populate: [{ path: 'lider' }, { path: 'avances' }],
-          },
-        });
+        },
+        {
+          path: 'proyectosLiderados',
+        },
+      ]);
       return usuarios;
     },
     Usuario: async (parent, args) => {
-      const usuario = await UserModel.findOne({ _id: args._id })
-        .populate({
-          path: 'inscripciones',
-          populate: {
-            path: 'proyecto',
-            populate: [{ path: 'lider' }, { path: 'avances' }],
-          },
-        })
-        .populate({
-          path: 'avancesCreados',
-          populate: {
-            path: 'proyecto',
-            populate: [{ path: 'lider' }, { path: 'avances' }],
-          },
-        });
+      const usuario = await UserModel.findOne({ _id: args._id });
       return usuario;
     },
   },

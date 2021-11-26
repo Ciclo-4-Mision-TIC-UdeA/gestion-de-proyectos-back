@@ -3,11 +3,7 @@ import { ProjectModel } from './proyecto.js';
 const resolversProyecto = {
   Query: {
     Proyectos: async (parent, args, context) => {
-      const proyectos = await ProjectModel.find().populate([
-        { path: 'lider' },
-        { path: 'avances' },
-        { path: 'inscripciones', populate: { path: 'estudiante' } },
-      ]);
+      const proyectos = await ProjectModel.find();
       return proyectos;
     },
   },
@@ -26,31 +22,29 @@ const resolversProyecto = {
       return proyectoCreado;
     },
     editarProyecto: async (parent, args) => {
-      const proyectoEditado = await ProjectModel.findOneAndUpdate(
+      const proyectoEditado = await ProjectModel.findByIdAndUpdate(
         args._id,
-        { ...args.editProyecto },
+        { ...args.campos },
         { new: true }
       );
       return proyectoEditado;
     },
     crearObjetivo: async (parent, args) => {
-      const proyectoObjetivo = await ProjectModel.findByIdAndUpdate(
-        { _id: args.idProyecto },
+      const proyectoConObjetivo = await ProjectModel.findByIdAndUpdate(
+        args.idProyecto,
         {
           $addToSet: {
-            objetivos: {
-              ...args.campos,
-            },
+            objetivos: { ...args.campos },
           },
         },
         { new: true }
       );
-      console.log(proyectoObjetivo);
-      return proyectoObjetivo;
+
+      return proyectoConObjetivo;
     },
     editarObjetivo: async (parent, args) => {
-      const proyectoEncontrado = await ProjectModel.findByIdAndUpdate(
-        { _id: args.idProyecto },
+      const proyectoEditado = await ProjectModel.findByIdAndUpdate(
+        args.idProyecto,
         {
           $set: {
             [`objetivos.${args.indexObjetivo}.descripcion`]: args.campos.descripcion,
@@ -59,7 +53,7 @@ const resolversProyecto = {
         },
         { new: true }
       );
-      return proyectoEncontrado;
+      return proyectoEditado;
     },
     eliminarObjetivo: async (parent, args) => {
       const proyectoObjetivo = await ProjectModel.findByIdAndUpdate(
@@ -73,7 +67,6 @@ const resolversProyecto = {
         },
         { new: true }
       );
-      console.log(proyectoObjetivo);
       return proyectoObjetivo;
     },
   },
