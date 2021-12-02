@@ -1,11 +1,21 @@
+import { ProjectModel } from '../proyecto/proyecto.js';
 import { InscriptionModel } from './inscripcion.js';
 
 const resolverInscripciones = {
+  Inscripcion: {
+    proyecto: async (parent, args, context) => {
+      return await ProjectModel.findOne({ _id: parent.proyecto });
+    },
+  },
   Query: {
     Inscripciones: async (parent, args) => {
       const inscripciones = await InscriptionModel.find();
       return inscripciones;
     },
+
+    // inscripcionesNoAprobadas: async () => {
+    //   const ina = await InscriptionModel.find({ estado: 'PENDIENTE' }).populate('estudiante');
+    // },
   },
   Mutation: {
     crearInscripcion: async (parent, args) => {
