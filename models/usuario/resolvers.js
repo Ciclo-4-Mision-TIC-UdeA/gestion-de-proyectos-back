@@ -10,19 +10,8 @@ const resolversUsuario = {
   },
   Query: {
     Usuarios: async (parent, args, context) => {
-      const usuarios = await UserModel.find();
-      // .populate([
-      //   {
-      //     path: 'inscripciones',
-      //     populate: {
-      //       path: 'proyecto',
-      //       populate: [{ path: 'lider' }, { path: 'avances' }],
-      //     },
-      //   },
-      //   {
-      //     path: 'proyectosLiderados',
-      //   },
-      // ]);
+      console.log(args);
+      const usuarios = await UserModel.find({ ...args.filtro });
       return usuarios;
     },
     Usuario: async (parent, args) => {
