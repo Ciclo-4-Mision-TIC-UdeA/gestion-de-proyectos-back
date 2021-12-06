@@ -1,4 +1,5 @@
 import { ProjectModel } from '../proyecto/proyecto.js';
+import { UserModel } from '../usuario/usuario.js';
 import { InscriptionModel } from './inscripcion.js';
 
 const resolverInscripciones = {
@@ -6,10 +7,25 @@ const resolverInscripciones = {
     proyecto: async (parent, args, context) => {
       return await ProjectModel.findOne({ _id: parent.proyecto });
     },
+    estudiante: async (parent, args, context) => {
+      return await UserModel.findOne({ _id: parent.estudiante });
+    },
   },
   Query: {
-    Inscripciones: async (parent, args) => {
-      const inscripciones = await InscriptionModel.find();
+    Inscripciones: async (parent, args, context) => {
+      let filtro = {};
+      if (context.userData) {
+        if (context.userData.rol === 'LIDER') {
+          const projects = await ProjectModel.find({ lider: '61a1150c351c7c00e8eb0be9' });
+          const projectList = projects.map((p) => p._id.toString());
+          filtro = {
+            proyecto: {
+              $in: projectList,
+            },
+          };
+        }
+      }
+      const inscripciones = await InscriptionModel.find({ ...filtro });
       return inscripciones;
     },
 
@@ -20,7 +36,6 @@ const resolverInscripciones = {
   Mutation: {
     crearInscripcion: async (parent, args) => {
       const inscripcionCreada = await InscriptionModel.create({
-        estado: args.estado,
         proyecto: args.proyecto,
         estudiante: args.estudiante,
       });
