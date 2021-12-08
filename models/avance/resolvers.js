@@ -15,12 +15,13 @@ const resolversAvance = {
   },
   Mutation: {
     crearAvance: async (parents, args) => {
-      const avanceCreado = ModeloAvance.create({
+      const avanceCreado = await ModeloAvance.create({
         fecha: args.fecha,
         descripcion: args.descripcion,
         proyecto: args.proyecto,
         creadoPor: args.creadoPor,
       });
+
       return avanceCreado;
     },
   },
