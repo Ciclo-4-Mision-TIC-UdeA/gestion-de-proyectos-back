@@ -39,11 +39,11 @@ app.use(express.json());
 
 app.use(cors());
 
-app.listen({ port: process.env.PORT || 4000 }, async () => {
+app.listen({ port: process.env.PORT || 3001 }, async () => {
   await conectarBD();
   await server.start();
 
   server.applyMiddleware({ app });
 
-  console.log('servidor listo');
+  console.log('servidor listo en el puerto', process.env.PORT || 3001);
 });
