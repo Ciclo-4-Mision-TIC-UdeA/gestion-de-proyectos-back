@@ -55,14 +55,31 @@ it('creates user', async () => {
       }
     `,
     variables: {
-      nombre: 'Daniel',
-      apellido: 'Saldarriaga',
-      identificacion: '1234234',
-      correo: 'dsaldarriaga@prevalentware.com',
+      nombre: 'user test',
+      apellido: 'test',
+      identificacion: 'test',
+      correo: 'testing@testing.com',
       rol: 'ADMINISTRADOR',
       password: '12345',
     },
   });
+  console.log('result', result.data.crear);
+  assert.notEqual(result.data.crearUsuario, null);
+});
 
-  assert.notEqual(result.data.CrearUsuario, null);
+it('deletes user', async () => {
+  const result = await server.executeOperation({
+    query: gql`
+      mutation EliminarUsuario($correo: String) {
+        eliminarUsuario(correo: $correo) {
+          _id
+        }
+      }
+    `,
+    variables: {
+      correo: 'testing@testing.com',
+    },
+  });
+  console.log('result', result);
+  assert.notEqual(result.data.eliminarUsuario, null);
 });
