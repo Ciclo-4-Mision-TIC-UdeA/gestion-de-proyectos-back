@@ -20,3 +20,9 @@ workflows:
   ci_cd:
     jobs:
       - test
+      - heroku/deploy-via-git:
+          requires:
+            - test
+          filters:
+            branches:
+              only: main
