@@ -14,27 +14,10 @@ const server = new ApolloServer({
   resolvers: resolvers,
 });
 
-it('fetches user', async () => {
-  const result = await server.executeOperation({
-    query: gql`
-      query Usuario($id: String!) {
-        Usuario(_id: $id) {
-          correo
-        }
-      }
-    `,
-    variables: {
-      id: '61a1150c351c7c00e8eb0be9',
-    },
-  });
-
-  assert.equal(result.data.Usuario.correo, 'test@test.com');
-});
-
 it('creates user', async () => {
   const result = await server.executeOperation({
     query: gql`
-      mutation CrearUsuario(
+      mutation Mutation(
         $nombre: String!
         $apellido: String!
         $identificacion: String!
@@ -50,21 +33,42 @@ it('creates user', async () => {
           rol: $rol
           password: $password
         ) {
-          _id
+          correo
         }
       }
     `,
     variables: {
-      nombre: 'user test',
+      nombre: 'test',
       apellido: 'test',
       identificacion: 'test',
       correo: 'testing@testing.com',
       rol: 'ADMINISTRADOR',
-      password: '12345',
+      password: 'test',
     },
   });
-  console.log('result', result.data.crear);
-  assert.notEqual(result.data.crearUsuario, null);
+
+  assert.equal(result.data.crearUsuario.correo, 'testing@testing.com');
+});
+
+it('fetches user', async () => {
+  const result = await server.executeOperation({
+    query: gql`
+      query Usuarios($filtro: FiltroUsuarios) {
+        Usuarios(filtro: $filtro) {
+          correo
+        }
+      }
+    `,
+    variables: {
+      filtro: {
+        correo: 'testing@testing.com',
+      },
+    },
+  });
+
+  assert.equal(result.data.Usuarios.length, 1);
+
+  assert.equal(result.data.Usuarios[0].correo, 'testing@testing.com');
 });
 
 it('deletes user', async () => {
@@ -72,7 +76,7 @@ it('deletes user', async () => {
     query: gql`
       mutation EliminarUsuario($correo: String) {
         eliminarUsuario(correo: $correo) {
-          _id
+          correo
         }
       }
     `,
@@ -80,6 +84,24 @@ it('deletes user', async () => {
       correo: 'testing@testing.com',
     },
   });
-  console.log('result', result);
-  assert.notEqual(result.data.eliminarUsuario, null);
+  assert.equal(result.data.eliminarUsuario.correo, 'testing@testing.com');
+});
+
+it('fetches user after deletion', async () => {
+  const result = await server.executeOperation({
+    query: gql`
+      query Usuarios($filtro: FiltroUsuarios) {
+        Usuarios(filtro: $filtro) {
+          correo
+        }
+      }
+    `,
+    variables: {
+      filtro: {
+        correo: 'testing@testing.com',
+      },
+    },
+  });
+
+  assert.equal(result.data.Usuarios.length, 0);
 });
