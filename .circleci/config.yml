@@ -15,3 +15,8 @@ jobs:
       - run:
           name: Ejecutar Tests
           command: yarn test
+
+workflows:
+  ci_cd:
+    jobs:
+      - test
